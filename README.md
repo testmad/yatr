@@ -4,7 +4,7 @@ YATR ( Yet Another Terraform Registry ) is a [Flask](https://github.com/pallets/
 
 YATR is different from other simple registries in that it automagically serves module archives by compressing module sources on the fly. Just pass in a modules path variable.
 
-This useful in cases where you want to use local module sources with version contstraints.
+This is useful in cases where you want to use local module sources with version contstraints.
 
 
 ## Usage
@@ -63,6 +63,14 @@ You'll need to use a proxy to handle terraforms HTTPS requirement. You can use a
 ```
 npm install -g localtunnel
 lt -p 8787 -s $USER --local-host "127.0.0.1" -o --print-requests
+```
+
+Usage in your `main.tf`:
+```
+module "string" {
+  source = "testmad.loca.lt/test/my_string/fake"
+  version = "0.2.0"
+}
 ```
 
 
