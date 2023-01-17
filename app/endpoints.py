@@ -22,6 +22,10 @@ def get_service_discovery():
 @app.route("/terraform/modules/v1/<namespace>/<name>/<system>/versions")
 def get_list_versions(namespace, name, system):
     response = jsonify(get_versions(namespace, name, system))
+
+    if response is None:
+        abort(404)
+    
     return response
 
 # Get download location for specific module version
@@ -34,4 +38,8 @@ def get_version_download(namespace, name, system, version):
 @app.route("/terraform/modules/v1/<namespace>/<name>/<system>/<version>/module.zip")
 def get_module_file(namespace, name, system, version):
     response = get_module(namespace, name, system, version)
+
+    if response is None:
+        abort(404)
+    
     return response
