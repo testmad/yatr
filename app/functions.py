@@ -63,7 +63,10 @@ def get_module(namespace, name, system, version):
             name,
             version
         )
-
+    
+    if not os.path.exists(_p):
+        return None
+    
     filestream = BytesIO()
 
     with zipfile.ZipFile(filestream, 'w', compression=zipfile.ZIP_DEFLATED) as zipObject:
