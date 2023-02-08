@@ -1,5 +1,6 @@
 import json
 import os
+import pathlib
 from flask import make_response, send_file, abort
 import zipfile
 from io import BytesIO
@@ -67,14 +68,12 @@ def get_module(namespace, name, system, version):
     if not os.path.exists(_p):
         return None
     
+    directory = pathlib.Path(_p)
     filestream = BytesIO()
 
     with zipfile.ZipFile(filestream, 'w', compression=zipfile.ZIP_DEFLATED) as zipObject:
-        for root, dirs, files in os.walk(_p):
-            for file in files:
-                filepath = os.path.join(root, file)
-                content = open(os.path.join(root, file)).read()
-                zipObject.writestr(filepath.replace(_p, ""), content)
+        for file_path in directory.rglob("*"):
+            zipObject.write(file_path, arcname=file_path.relative_to(directory))
         zipObject.close()
 
     filestream.seek(0)
