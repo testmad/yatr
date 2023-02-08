@@ -16,4 +16,4 @@ COPY . /app
 
 RUN python -m pip install -r requirements.txt
 
-CMD ["gunicorn", "-w", "4", "--bind", "127.0.0.1:8787", "--timeout", "600", "app.app:app"]
+CMD ["gunicorn", "-w", "4", "--bind", "0.0.0.0:8787", "--timeout", "600", "app.app:app"]
